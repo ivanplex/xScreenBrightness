@@ -15,6 +15,9 @@ brightness 0.05
 #Decrease brightness by 5%
 brightness -5%
 brightness -0.05
+
+#Return current brightness
+brightness
 ~~~
 
 Dependency
