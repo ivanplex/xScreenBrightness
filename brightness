@@ -1,0 +1,15 @@
+#!/bin/bash
+
+MAIN_SCREEN=`xrandr | grep -E " connected (primary )?[1-9]+" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/" | sed -n '1 p'`
+CURRENT_BRIGHTNESS=`xrandr --verbose | grep -m 1 -i brightness | cut -f2 -d ' '`
+
+#Convert percentage to decimal
+if [ "${1: -1}" == "%" ]; then
+	PERCENT="${1::-1}"
+	ADJUST="0"`bc <<<"scale=2; $PERCENT/100"`
+else
+	ADJUST=$1
+fi
+
+NEW_BRIGHTNESS=`echo "$CURRENT_BRIGHTNESS+$ADJUST" | bc`
+xrandr --output $MAIN_SCREEN --brightness $NEW_BRIGHTNESS
